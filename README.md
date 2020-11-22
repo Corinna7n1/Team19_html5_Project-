@@ -4,4 +4,3 @@ JLU_html5_homework,Wechat_applet
 小组成员：张越涵、迟芳茹、刘成杰、马陈楠
 
 
-需求分析 和 设计报告 均在项目计划书中
