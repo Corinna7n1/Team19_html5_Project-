@@ -2,7 +2,7 @@
 <import src="../common/foot.wxml" />
 <view class="container">
   <view class="userinfo">
-    <image class="user-background" src="../common/icon/wallpaper8.jpg"></image>
+    <image class="user-background" src="../common/icon/wallpaper5.jpg"></image>
     <view class="userinfo-avatar">
       <open-data type="userAvatarUrl"></open-data>
     </view>
