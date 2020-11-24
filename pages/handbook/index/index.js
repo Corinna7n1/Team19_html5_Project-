@@ -8,7 +8,88 @@ Page({
     title: '',
     sum: 0,
     persum: 0,
-    sublist: []
+    sublist: [],//orignal end
+    bill_arr_bat : [],
+    bill_arr : [],
+    earn_sum : 0,
+    consum_sum : 0,
+    isShow : false,
+    date : '',
+    check_value_arr : [],
+ 
+  },
+      // 多选框
+      checkboxChange: function(e) {
+        this.setData({
+            check_value_arr: e.detail.value
+        });
+    },
+    // 确定搜索过滤
+    confirmSearch(){
+      var query_condition = {
+          check_value_arr: this.data.check_value_arr,
+          date: this.data.date
+      };
+      var result = this.fetchBillArr(query_condition);
+      var earnConsum = this.getEarnAndConsum(result);
+      this.setData({
+          bill_arr: result, 
+          earn_sum: earnConsum.earn,
+          consum_sum: earnConsum.consum,
+          isShow: false
+      });
+      
+  },
+    // 取消或者重置搜索
+    cancelSearch(){
+      var result = this.fetchBillArr();
+      var earnConsum = this.getEarnAndConsum(result);
+      this.setData({
+          bill_arr: result, 
+          earn_sum: earnConsum.earn,
+          consum_sum: earnConsum.consum,
+          isShow: false
+      });
+  },
+
+    // 返回查询数据
+    fetchBillArr(query_condition){
+      var bill_arr = this.data.bill_arr_bat || [];
+      console.log(query_condition);
+      if( query_condition ){
+          var date = query_condition.date;
+          var check_value_arr = query_condition.check_value_arr;
+          if(date){
+              var arr = [];
+              bill_arr.forEach((item,index) => {
+                  if(item.date == date){
+                      arr.push(item);
+                  }
+              });
+              bill_arr = arr;
+          }
+          if(check_value_arr.length){
+              var arr = [];
+              check_value_arr.forEach((item,index) => {
+                  bill_arr.forEach((it,i) => {
+                      if(it.billTypeNumber == item){
+                          arr.push(it);
+                      }
+                  });
+              });
+              bill_arr = arr;
+          }
+      }
+      return bill_arr;
+  },
+    // 是否展开筛选框
+    selectResult(){
+      var check_value_arr = [];
+      var isShow = this.data.isShow;
+      this.setData({
+          check_value_arr: check_value_arr,
+          isShow : !isShow
+      });
   },
   onLoad: function (params) {
     // 生命周期函数--监听页面加载

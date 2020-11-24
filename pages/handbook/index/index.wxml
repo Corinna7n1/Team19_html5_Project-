@@ -1,10 +1,42 @@
 
 <!--handbook.wxml-->
 <import src="../../common/foot.wxml" />
+
 <view class="container">
+
   <view class="page-head">
+    <icon  style="color:#d57af1;clear:both;float:right;" class="iconfont icon-rili  fa-lg" bindtap="selectResult"></icon>
+   <view  wx:if="{{isShow==true}}" class="right_fix">
+        <view  class="clear_box">
+            <picker mode="date" value="{{date}}" bindchange="bindDateChange">
+                <view class="section__title">日期:</view>
+                <view class="right">
+                    <text>{{date}}</text>
+                    <icon class="fa fa-angle-right fa-fw"/> 
+                </view>
+            </picker>
+        </view>
+        <view class="clear_box">
+            <checkbox-group bindchange="checkboxChange" class="check_box">
+                <label class="checkbox" wx:for="{{items}}" wx:key="{{index}}">
+                    <checkbox value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+                </label>
+            </checkbox-group>
+        </view>
+        
+        <view class="button_box">
+            <button type="primary" size="default" bindtap="confirmSearch"> 确认 </button>
+            <button type="default" size="default" bindtap="cancelSearch"> 重置 </button>
+        </view>
+        
+    </view>
+    <view class="no_bill" wx:if="{{bill_arr.length==0}}">
+        <text>没有账单</text>
+    </view>
+
     <view class="page-head-desc">本次活动共计花费{{ sum }}元，个人花费{{persum}}元。
     </view>
+
     <view class="page-head-line"></view>
   </view>
   <view class="page-body">
