@@ -24,6 +24,7 @@ App({
   globalData:{
     userInfo:null,
     numberarray: ['1', '2', '3', '4', '5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20'],
-    typearray: ['购物','餐饮','交通','住宿','玩乐','其他']
+    typearray: ['购物','餐饮','交通','住宿','玩乐','其他'],
+    iconarray:['icon-gouwu','icon-canyin','icon-jiaotongfei','icon-dalou','icon-tennis','icon-qita']
   }
 })
