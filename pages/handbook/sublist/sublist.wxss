@@ -1,4 +1,21 @@
-/* touch */
+/*文字发光效果*/
+@import"../../common/lib/our_icon.wxss";
+.money{ 
+  font-size: 16px; 
+  color:#40aa2b; 
+  margin: 10px;
+  animation: changeshadow 1s  ease-in  infinite ;
+  /* 其它浏览器兼容性前缀 */
+  -webkit-animation: changeshadow 1s linear infinite;
+  -moz-animation: changeshadow 1s linear infinite;
+  -ms-animation: changeshadow 1s linear infinite;
+  -o-animation: changeshadow 1s linear infinite;
+}  
+@keyframes changeshadow {  
+  0%{ text-shadow: 0 0 4px #4cc134}  
+  50%{ text-shadow: 0 0 40px #4cc134}  
+  100%{ text-shadow: 0 0 4px #4cc134}  
+}
 .touch-main {
  font-size: 14px;
  display: flex;
@@ -40,26 +57,37 @@
  transform: translateX(0);
 }
 
+.navigator-text{
+  display: block;
+  border-bottom: 0.6px solid #b4b4b0;
+}
 .navigator-text1 {
   display: inline;
   text-align: left;
   font-size: 28rpx;
+  font-weight: 600;
+  color: #e3a9a5;
 }
 
 .navigator-time {
   text-align: right;
   float: right;
   font-size: 28rpx;
+  font-weight: 300;
+  
 }
 
 .navigator-text2 {
+
   text-align: center;
-  padding: 20rpx 40rpx 20rpx 40rpx;
+  padding: 10rpx 0 10rpx 10rpx;
+  
 }
 
 .navigator-text3 {
   text-align: right;
   font-size: 28rpx;
+  
 }
 
 .timeline {
@@ -76,9 +104,10 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 10px;
-  background: #afdcf8;
-  left: 10%;
+  width: 7px;
+  background-image: linear-gradient(to top,#e6b8cf,#fae0a3);
+  
+  left: 5%;
   margin-left: -10px;
   z-index: 100;
 }
@@ -90,9 +119,12 @@
 /* Right content */
 
 .timeline_tmlabel {
-  margin: 0 0 15px 15%;
-  background: #b6e4f4;
-  padding: 2em;
+  margin: 0 5% 10px 10%;
+  border:1px outset #eedfa3;
+  background-image:linear-gradient(to top,#eedfa3,#ffead3);
+  box-shadow: 8px 8px 3px #cecccc;
+  height: 75px;
+  padding: 0.3em;
   font-size: 1.2em;
   font-weight: 300;
   position: relative;
@@ -109,7 +141,7 @@
   width: 0;
   position: absolute;
   pointer-events: none;
-  border-right-color: #b6e4f4;
+  border-right-color: #c4c26d;
   border-width: 10px;
   top: 5px;
 }
@@ -125,11 +157,11 @@
   -webkit-font-smoothing: antialiased;
   position: absolute;
   color: #fff;
-  background: #46a4da;
+  background:#f3ad9d;
   border-radius: 50%;
-  box-shadow: 0 0 0 5px #afdcf8;
+  box-shadow: 0 0 0 5px  #f6d8ca;
   text-align: center;
-  left: 10%;
+  left: 5%;
   top: 5px;
   margin: 0 0 0 -12.5px;
   z-index: 100;
