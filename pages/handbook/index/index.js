@@ -1,55 +1,26 @@
+//index.js
+//获取应用实例
 var app = getApp()
 var rawlist = wx.getStorageSync('cashflow') || []
-
 Page({
   data: {
-    mainindex: '',
-    typearray: app.globalData.typearray,
-    title: '',
-    sum: 0,
-    persum: 0,
-    sublist: []
+    modalHidden1: true,
+    modalHidden2: true,
+    temptitle: '',
+    tempindex: '',
+    list: rawlist,
+    userInfo: {}
   },
-  onLoad: function (params) {
-    // 生命周期函数--监听页面加载
-    this.setData({
-      mainindex: params.index,
-      title: rawlist[params.index].title,
+onLoad: function () {
+    console.log('onLoad')
+    var that = this
+    //调用应用实例的方法获取全局数据
+    app.getUserInfo(function (userinfo) {
+      //更新数据
+      that.setData({
+        userInfo: userInfo
+      })
     })
-    wx.setNavigationBarTitle({
-      title: this.data.title
-    })
-  },
-  onReady: function () {
-    // 生命周期函数--监听页面初次渲染完成
-  },
-  onShow: function () {
-    // 生命周期函数--监听页面显示
-    rawlist = wx.getStorageSync('cashflow') || []
-    var sublist = rawlist[this.data.mainindex].items
-    var sum = 0
-    var persum = 0
-    for (var i = 0; i < sublist.length; i++) {
-      sum += parseFloat(sublist[i].cost)
-      persum += parseFloat(sublist[i].cost) / sublist[i].member
-    }
-    this.setData({
-      sum: sum.toFixed(2),
-      persum: persum.toFixed(2),
-      sublist: sublist
-    })
-  },
-  onHide: function () {
-    // 生命周期函数--监听页面隐藏
-  },
-  onUnload: function () {
-    // 生命周期函数--监听页面卸载
-  },
-  onPullDownRefresh: function () {
-    // 页面相关事件处理函数--监听用户下拉动作
-  },
-  onReachBottom: function () {
-    // 页面上拉触底事件的处理函数
   },
   onShareAppMessage: function () {
     // 用户点击右上角分享
@@ -59,17 +30,82 @@ Page({
       path: '/pages/index/index' // 分享路径
     }
   },
+  setTitle: function (e) {
+    this.setData({
+      temptitle: e.detail.value
+    })
+    return {
+      value: ''
+    }
+  },
+  //新增模态框
+  showModal1: function (e) {
+    this.setData({
+      modalHidden1: !this.data.modalHidden1
+    })
+  },
+  modalBindaconfirm1: function (e) {
+    var templist = this.data.list
+    templist.push({
+      title: this.data.temptitle,
+      id:templist.length,
+      items: []
+    })
+    rawlist.push({
+      title: this.data.temptitle,
+      id:templist.length,
+      items: []
+    })
+    this.setData({
+      modalHidden1: !this.data.modalHidden1,
+      temptitle: '',
+      list: templist
+    })
+    wx.setStorageSync('cashflow', rawlist)
+  },
+  modalBindcancel1: function () {
+    this.setData({
+      modalHidden1: !this.data.modalHidden1,
+    })
+  },
+  //重命名模态框
+  showModal2: function (e) {
+    var tempindex = e.currentTarget.dataset.index
+    var temptitle = this.data.list[tempindex].title
+    this.setData({
+      modalHidden2: !this.data.modalHidden2,
+      temptitle:temptitle,
+      tempindex: tempindex
+    })
+  },
+  modalBindaconfirm2: function (e) {
+    var templist = this.data.list
+    var index = this.data.tempindex
+    templist[index].title = this.data.temptitle
+    rawlist[index].title = this.data.temptitle
+    this.setData({
+      modalHidden2: !this.data.modalHidden2,
+      temptitle: '',
+      list: templist
+    })
+    wx.setStorageSync('cashflow', rawlist)
+  },
+  modalBindcancel2: function () {
+    this.setData({
+      modalHidden2: !this.data.modalHidden2,
+    })
+  },
   //手指触摸动作开始 记录起点X坐标
   touchstart: function (e) {
     //开始触摸时 重置所有删除
-    this.data.sublist.forEach(function (v, i) {
+    this.data.list.forEach(function (v, i) {
       if (v.isTouchMove)//只操作为true的
         v.isTouchMove = false
     })
     this.setData({
       startX: e.changedTouches[0].clientX,
       startY: e.changedTouches[0].clientY,
-      sublist: this.data.sublist
+      list: this.data.list
     })
   },
   //滑动事件处理
@@ -82,7 +118,7 @@ Page({
       touchMoveY = e.changedTouches[0].clientY,//滑动变化坐标
       //获取滑动角度
       angle = that.angle({ X: startX, Y: startY }, { X: touchMoveX, Y: touchMoveY })
-    that.data.sublist.forEach(function (v, i) {
+    that.data.list.forEach(function (v, i) {
       v.isTouchMove = false
       //滑动超过30度角 return
       if (Math.abs(angle) > 30) return
@@ -95,7 +131,7 @@ Page({
     })
     //更新数据
     that.setData({
-      sublist: that.data.sublist
+      list: that.data.list
     })
   },
   /**
@@ -112,17 +148,16 @@ Page({
   //删除事件
   del: function (e) {
     var index = e.currentTarget.dataset.index
-    this.data.sublist.splice(index, 1)
+    this.data.list.splice(index, 1)
     this.setData({
-      sublist: this.data.sublist
+      list: this.data.list
     })
-    rawlist[this.data.mainindex].items.splice(index, 1)
+    rawlist.splice(index, 1)
     wx.setStorageSync('cashflow', rawlist)
     wx.showToast({
       title: '成功',
       icon: 'success',
       duration: 2000
     })
-    this.onShow()
   }
 })
