@@ -1,3 +1,4 @@
+@import"../common/lib/our_icon.wxss";
 .content {
   background-image:linear-gradient(to bottom left,white, #dae3f7);
  width: 100%;

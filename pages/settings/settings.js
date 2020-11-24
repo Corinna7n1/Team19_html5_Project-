@@ -3,6 +3,7 @@
 var app = getApp()
 var list = wx.getStorageSync('typelist') || []
 var typearray = app.globalData.typearray
+var iconarray=app.globalData.iconarray
 Page({
     data: {
         modalHidden: true,
@@ -16,6 +17,7 @@ Page({
                 list.push({
                     id: i,
                     name: typearray[i],
+                    pic: iconarray[i],
                     edit: false
                 })
             }
@@ -36,6 +38,7 @@ Page({
                         list.push({
                             id: i,
                             name: typearray[i],
+                            pic:iconarray[i],
                             edit: false
                         })
                     }

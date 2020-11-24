@@ -20,7 +20,7 @@
       <view class="touch-item {{item.isTouchMove ? 'touch-move-active' : ''}}" data-index="{{index}}" bindtouchstart="touchstart" bindtouchmove="touchmove" wx:for="{{list}}" wx:key="id">
         <view class="content" style="display:flex">
             <view class="navigator-text">{{item.name}}</view>
-            <view class="navigator-arrow"></view>
+            <view class=" iconfont {{item.pic}}"></view>
         </view>
         <view class="del" catchtap="del" data-index="{{index}}">删除</view>
       </view>
