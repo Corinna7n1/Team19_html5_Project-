@@ -4,7 +4,7 @@ JLU_html5_homework,Wechat_applet
 小组成员：张越涵、迟芳茹、刘成杰、马陈楠
 
 
-│  app.js      #小程序的逻辑文件
+│  app.js      #小程序的逻辑文件  
 │  app.json    #小程序的配置文件
 │  app.wxss    #全局公共样式文件
 │  project.config.json
